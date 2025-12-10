@@ -1,0 +1,14 @@
+phyton>=3.8
+numpy
+pandas
+scikit-learn
+xgboost
+joblib
+tensorflow>=2.6
+Pillow
+opencv-phyton
+matplotlib
+seaborn
+shap
+streamlit
+tqdm
