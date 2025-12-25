@@ -1,2 +1,2 @@
 # MachineLearning-Project
-Tugas Besar Machine Learning ; Klasifikasi kanker paru-paru dari citra CT Scan menggunakan transfer learning + ML tabular (XGBoost / LightGBM)
+Tugas Besar Machine Learning ; Perbandingan Kinerja Decision Tree, K-Nearest Neighbor, dan XGBoost dalam Prediksi Diabetes
