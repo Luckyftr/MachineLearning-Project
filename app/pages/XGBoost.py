@@ -11,15 +11,15 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import shap
 
-st.title("Diabetes Prediction + SHAP Explainability (Decision Tree)")
+st.title("Diabetes Prediction + SHAP Explainability (XGBoost)")
 
 # =============================
 # Load Model & Scaler
 # =============================
-BASE_DIR = Path(__file__).resolve().parent.parent
-MODELS_PATH = BASE_DIR / "models" 
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+MODELS_PATH = BASE_DIR / "models"
 
-model = joblib.load(MODELS_PATH / "Decision_Tree.joblib")
+model = joblib.load(MODELS_PATH / "XGBoost.joblib")
 scaler = joblib.load(MODELS_PATH / "scaler.joblib")
 
 # =============================
@@ -80,9 +80,12 @@ if st.button("Jalankan Prediksi"):
         shap_val_to_plot = shap_values_personal[0,:] if shap_values_personal.ndim==2 else shap_values_personal[0,:,1]
         base_value = explainer.expected_value[1] if isinstance(explainer.expected_value, np.ndarray) else explainer.expected_value
 
-    explanation = shap.Explanation(values=shap_val_to_plot,
-                                base_values=base_value,
-                                feature_names=user_data.columns)
+    explanation = shap.Explanation(
+        values=shap_val_to_plot,
+        base_values=base_value,
+        feature_names=user_data.columns
+    )
+
     shap.plots.waterfall(explanation, max_display=8)
     st.pyplot(plt.gcf())
     plt.clf()
@@ -95,6 +98,7 @@ if st.button("Jalankan Prediksi"):
     df = pd.read_csv(test_path)
     X = df.drop("Outcome", axis=1)
     y = df["Outcome"]
+
     X_scaled = scaler.transform(X)
     y_pred = model.predict(X_scaled)
     y_prob = model.predict_proba(X_scaled)[:,1] if hasattr(model, "predict_proba") else None
@@ -118,6 +122,7 @@ if st.button("Jalankan Prediksi"):
         st.subheader("ROC Curve & AUC")
         fpr, tpr, thresholds = roc_curve(y, y_prob)
         roc_auc = auc(fpr, tpr)
+
         fig3, ax3 = plt.subplots()
         ax3.plot(fpr, tpr, color='blue', lw=2, label=f'AUC = {roc_auc:.2f}')
         ax3.plot([0,1],[0,1], color='grey', lw=1, linestyle='--')
