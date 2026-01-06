@@ -13,8 +13,12 @@ conda activate diabetes_app
 
 echo "=== STEP 2: Install library yang dibutuhkan ==="
 pip install streamlit joblib numpy pandas scikit-learn matplotlib -q
+pip install ipython -q
 pip install xgboost -q
 pip install seaborn -q
+pip install shap -q
+
+
 
 echo "=== STEP 3: Pindah ke folder app & jalankan Streamlit ==="
 # Ganti path di bawah sesuai lokasi folder app di komputer/GitHub
